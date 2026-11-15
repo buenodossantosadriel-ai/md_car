@@ -1,601 +1,406 @@
-<!DOCTYPE html><html lang="pt-BR"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="MD CAR - Oficina mecânica no bairro Ouro Preto, em Carazinho-RS. Entre em contato para consultar nossos serviços e solicitar um orçamento.">
-
-<meta name="theme-color" content="#111111">
-
-<title>MD CAR | Oficina Mecânica</title>
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pré‑visualização Página</title>
 <style>
-    /* CONFIGURAÇÕES GERAIS */
+/* Animações do carrossel */
+@keyframes moveLeft {
+    from {transform: translateX(100%);}
+    to {transform: translateX(0);}
+}
+@keyframes moveLeftActive {
+    from {transform: translateX(0);}
+    to {transform: translateX(-100%);}
+}
+@keyframes moveRight {
+    from {transform: translateX(-100%);}
+    to {transform: translateX(0);}
+}
+@keyframes moveRightActive {
+    from {transform: translateX(0);}
+    to {transform: translateX(100%);}
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+.component-slider {
+    --footer-gap: 8px;
+    --item-button-height: 3px;
+    --toggle-button-width: 24px;
+    width:100%;
+    max-width:1100px;
+    margin:0 auto 40px;
+}
+.component-slider .carousel {
+    position: relative;
+    height:320px;
+    overflow:hidden;
+    background:#222;
+}
+.component-slider .carousel-caption {
+    left: 25%;
+    right: 25%;
+    color:white;
+    text-align:center;
+    top:40%;
+}
+.component-slider .carousel-item {
+    opacity: 0;
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
+.component-slider .carousel-item.move-right,
+.component-slider .carousel-item.move-left {
+    animation-duration: 0.6s;
+    animation-iteration-count: 1;
+    display: block;
+}
+.component-slider .carousel-item.active,
+.component-slider .carousel-item.move-left,
+.component-slider .carousel-item.move-right {
+    opacity: 1;
+}
+.component-slider .carousel-item.active {
+    transform: translateX(0);
+}
+.component-slider .carousel-item.active.move-left {
+    animation-name: moveLeftActive;
+}
+.component-slider .carousel-item.move-left {
+    animation-name: moveLeft;
+}
+.component-slider .carousel-item.active.move-right {
+    animation-name: moveRightActive;
+}
+.component-slider .carousel-item.move-right {
+    animation-name: moveRight;
+}
+.component-slider .carousel-control-next,
+.component-slider .carousel-control-prev {
+    background-color: rgba(255,255,255,0.2);
+    border: 0;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+}
+.component-slider .carousel-control {
+    bottom: auto;
+    height: auto;
+    padding: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    z-index:10;
+}
+.component-slider .carousel-control-next {
+    right: 5%;
+}
+.component-slider .carousel-control-prev {
+    left: 5%;
+}
+.component-slider .carousel-control:focus-visible {
+    border-radius: 4px;
+    box-shadow:0 0 0 2px #fff,0 0 0 4px #528eff;
+    outline: none;
+}
+.component-slider .carousel-footer {
+    bottom: 10px;
+    display: flex;
+    gap: var(--footer-gap);
+    justify-content: center;
+    left: 0;
+    padding-left: 0;
+    position: absolute;
+    right: 0;
+    width: calc(100% - var(--toggle-button-width) - var(--footer-gap));
+    z-index: 15;
+}
+.component-slider .carousel-navigation {
+    display: flex;
+    gap: var(--footer-gap);
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.component-slider .carousel-item-button {
+    background: transparent;
+    border: 0;
+    display: block;
+    outline: 0;
+    padding: calc((var(--toggle-button-width) - var(--item-button-height)) / 2) 0;
+    text-decoration: none;
+    cursor:pointer;
+}
+.component-slider .carousel-item-button:focus-visible {
+    border-radius: 4px;
+    box-shadow:0 0 0 2px #fff,0 0 0 4px #528eff;
+    outline: none;
+}
+.component-slider .carousel-item-button-icon {
+    background-color: rgba(255, 255, 255, 0.5);
+    display: block;
+    height: var(--item-button-height);
+    width: 30px;
+}
+.component-slider .carousel-item-button.active .carousel-item-button-icon {
+    background-color: rgba(255, 255, 255, 1);
+}
+.component-slider .carousel-toggle-button {
+    aspect-ratio: 1 / 1;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: rgba(255, 255, 255, 1);
+    display: block;
+    height: var(--toggle-button-width);
+    opacity: 0;
+    transition: opacity ease 0.6s;
+    width: var(--toggle-button-width);
+    cursor:pointer;
+}
+.component-slider .carousel-toggle-button--always-visible,
+.component-slider .carousel-toggle-button.stopped,
+.component-slider .carousel-toggle-button:focus-visible,
+.component-slider .component-slider:hover .carousel-toggle-button {
+    opacity: 1;
+}
+.component-slider .carousel-toggle-button:focus-visible {
+    border-radius: 4px;
+    box-shadow:0 0 0 2px #fff,0 0 0 4px #528eff;
+    opacity: 1;
+    outline: none;
+}
 
-    html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 90px;
-    }
-
-    body {
-        background: #101010;
-        color: #ffffff;
-        line-height: 1.6;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    /* CABEÇALHO */
-
-    header {
-        background: #080808;
-        border-bottom: 3px solid #e32636;
-        padding: 18px 7%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-        flex-wrap: wrap;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
-
-    .logo {
-        font-size: 30px;
-        font-weight: 900;
-        letter-spacing: 2px;
-        color: #ffffff;
-    }
-
-    .logo span {
-        color: #e32636;
-    }
-
-    nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    nav a {
-        color: #ffffff;
-        font-size: 14px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-
-    nav a:hover {
-        color: #e32636;
-    }
-
-    /* PÁGINA INICIAL */
-
-    .hero {
-        min-height: 75vh;
-        padding: 100px 8%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        background:
-            radial-gradient(
-                circle at 85% 30%,
-                #3a1115 0,
-                #171010 30%,
-                #101010 70%
-            );
-    }
-
-    .etiqueta {
-        display: inline-block;
-        color: #ff525f;
-        border: 1px solid #e32636;
-        padding: 7px 14px;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        font-size: 12px;
-        font-weight: bold;
-        letter-spacing: 2px;
-    }
-
-    .hero h1 {
-        font-size: clamp(38px, 7vw, 68px);
-        line-height: 1.1;
-        max-width: 800px;
-        margin-bottom: 25px;
-    }
-
-    .hero h1 span {
-        color: #e32636;
-    }
-
-    .hero p {
-        color: #cccccc;
-        max-width: 600px;
-        font-size: 18px;
-        margin-bottom: 30px;
-    }
-
-    .botao {
-        display: inline-block;
-        background: #e32636;
-        color: #ffffff;
-        padding: 14px 24px;
-        border-radius: 5px;
-        font-size: 15px;
-        font-weight: bold;
-        border: 2px solid #e32636;
-        transition: 0.3s;
-        cursor: pointer;
-    }
-
-    .botao:hover {
-        background: #b91c2b;
-        border-color: #b91c2b;
-        transform: translateY(-3px);
-    }
-
-    .botao-secundario {
-        background: transparent;
-        border-color: #555555;
-        margin-left: 10px;
-    }
-
-    .botao-secundario:hover {
-        background: #222222;
-        border-color: #ffffff;
-    }
-
-    /* SEÇÕES */
-
-    section {
-        padding: 80px 8%;
-    }
-
-    .titulo {
-        text-align: center;
-        font-size: clamp(28px, 4vw, 38px);
-        margin-bottom: 15px;
-    }
-
-    .titulo span {
-        color: #e32636;
-    }
-
-    .subtitulo {
-        color: #aaaaaa;
-        text-align: center;
-        max-width: 650px;
-        margin: 0 auto 45px;
-    }
-
-    /* SERVIÇOS */
-
-    .servicos {
-        display: grid;
-        grid-template-columns: repeat(
-            auto-fit,
-            minmax(220px, 1fr)
-        );
-        gap: 24px;
-    }
-
-    .card {
-        background: #1a1a1a;
-        border: 1px solid #303030;
-        border-radius: 10px;
-        padding: 30px;
-        transition: 0.3s;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        border-color: #e32636;
-    }
-
-    .icone {
-        font-size: 38px;
-        margin-bottom: 15px;
-    }
-
-    .card h3 {
-        color: #ff4655;
-        font-size: 20px;
-        margin-bottom: 12px;
-    }
-
-    .card p {
-        color: #bbbbbb;
-        font-size: 15px;
-    }
-
-    /* SOBRE A OFICINA */
-
-    .sobre {
-        background: #191919;
-    }
-
-    .sobre-conteudo {
-        max-width: 850px;
-        margin: auto;
-        text-align: center;
-    }
-
-    .sobre-conteudo p {
-        color: #cccccc;
-        margin-top: 20px;
-        font-size: 17px;
-    }
-
-    .destaques {
-        display: grid;
-        grid-template-columns: repeat(
-            auto-fit,
-            minmax(180px, 1fr)
-        );
-        gap: 20px;
-        margin-top: 40px;
-    }
-
-    .destaque {
-        background: #101010;
-        padding: 22px;
-        border-radius: 8px;
-        border-bottom: 3px solid #e32636;
-    }
-
-    .destaque strong {
-        display: block;
-        font-size: 17px;
-        margin-bottom: 7px;
-    }
-
-    .destaque span {
-        color: #aaaaaa;
-        font-size: 14px;
-    }
-
-    /* CONTATO */
-
-    .contato {
-        text-align: center;
-    }
-
-    .contato-info {
-        max-width: 650px;
-        margin: 0 auto 30px;
-        background: #1a1a1a;
-        border: 1px solid #303030;
-        border-radius: 10px;
-        padding: 30px;
-    }
-
-    .contato-info p {
-        margin: 12px 0;
-        color: #cccccc;
-        overflow-wrap: anywhere;
-    }
-
-    .contato-info strong {
-        color: #ffffff;
-    }
-
-    .contato .botao {
-        margin: 5px;
-    }
-
-    /* RODAPÉ */
-
-    footer {
-        background: #080808;
-        text-align: center;
-        padding: 28px 6%;
-        border-top: 2px solid #e32636;
-    }
-
-    footer .logo {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-
-    footer p {
-        color: #999999;
-        font-size: 13px;
-        margin-top: 8px;
-    }
-
-    /* CELULARES */
-
-    @media (max-width: 650px) {
-
-        header {
-            justify-content: center;
-            text-align: center;
-            padding: 16px 5%;
-        }
-
-        nav {
-            justify-content: center;
-            gap: 14px;
-        }
-
-        nav a {
-            font-size: 13px;
-        }
-
-        .hero {
-            min-height: 65vh;
-            padding: 70px 6%;
-        }
-
-        .hero p {
-            font-size: 16px;
-        }
-
-        section {
-            padding: 60px 6%;
-        }
-
-        .botao-secundario {
-            margin-left: 0;
-            margin-top: 10px;
-        }
-
-        .contato-info {
-            padding: 22px 15px;
-        }
-    }
+/* Menu Acesso Rápido */
+.menuAcessoRapido{
+    padding:24px;
+    max-width:1100px;
+    margin:0 auto;
+    background:#f7f7f7;
+}
+.menuAcessoRapido__links{
+    margin-bottom:20px;
+}
+.menuAcessoRapido__links--pai a{
+    font-weight:bold;
+    font-size:18px;
+    text-decoration:none;
+    color:#222;
+}
+.menuAcessoRapido__sublinks{
+    padding-left:16px;
+    margin-top:8px;
+}
+.menuAcessoRapido__sublinks--filho a{
+    text-decoration:none;
+    color:#444;
+}
 </style>
+</head>
+<body>
 
-</head><body><!-- CABEÇALHO -->
-
-<header>
-
-    <a href="#inicio" class="logo">
-        MD <span>CAR</span>
-    </a>
-
-    <nav>
-        <a href="#inicio">Início</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#sobre">Sobre nós</a>
-        <a href="#contato">Contato</a>
-    </nav>
-
-</header>
-
-<main>
-
-    <!-- PÁGINA INICIAL -->
-
-    <section class="hero" id="inicio">
-
-        <div class="etiqueta">
-            OFICINA MECÂNICA
-        </div>
-
-        <h1>
-            Seu carro merece o melhor.<br>
-            <span>Conte com a MD CAR.</span>
-        </h1>
-
-        <p>
-            Cuidado automotivo, atenção aos detalhes
-            e compromisso com o seu veículo.
-            Entre em contato com a MD CAR para consultar
-            nossos serviços e solicitar um orçamento.
-        </p>
-
-        <div>
-            <a
-                class="botao"
-                href="https://wa.me/555499145242"
-                target="_blank"
-                rel="noopener noreferrer">
-                Falar pelo WhatsApp
-            </a>
-
-            <a
-                class="botao botao-secundario"
-                href="#servicos">
-                Conhecer serviços
-            </a>
-        </div>
-
-    </section>
-
-    <!-- SERVIÇOS -->
-
-    <section id="servicos">
-
-        <h2 class="titulo">
-            Nossos <span>Serviços</span>
-        </h2>
-
-        <p class="subtitulo">
-            Confira alguns dos serviços que você pode
-            consultar com a nossa oficina.
-        </p>
-
-        <div class="servicos">
-
-            <article class="card">
-                <div class="icone">🛢️</div>
-
-                <h3>Troca de óleo</h3>
-
-                <p>
-                    Troca de óleo e filtros conforme as
-                    especificações recomendadas para o veículo.
-                </p>
-            </article>
-
-            <article class="card">
-                <div class="icone">🔧</div>
-
-                <h3>Revisão automotiva</h3>
-
-                <p>
-                    Verificação dos principais componentes
-                    e sistemas do automóvel.
-                </p>
-            </article>
-
-            <article class="card">
-                <div class="icone">🛞</div>
-
-                <h3>Freios e suspensão</h3>
-
-                <p>
-                    Inspeção e manutenção dos sistemas de
-                    freios e suspensão.
-                </p>
-            </article>
-
-            <article class="card">
-                <div class="icone">⚙️</div>
-
-                <h3>Diagnóstico mecânico</h3>
-
-                <p>
-                    Avaliação de falhas e identificação
-                    de possíveis problemas mecânicos.
-                </p>
-            </article>
-
-        </div>
-
-    </section>
-
-    <!-- SOBRE A MD CAR -->
-
-    <section class="sobre" id="sobre">
-
-        <div class="sobre-conteudo">
-
-            <h2 class="titulo">
-                Sobre a <span>MD CAR</span>
-            </h2>
-
-            <p>
-                Somos uma oficina mecânica localizada
-                no bairro Ouro Preto, em Carazinho, Rio Grande
-                do Sul. Nosso objetivo é oferecer atendimento
-                atencioso, informações claras e serviços
-                adequados às necessidades de cada veículo.
-            </p>
-
-            <div class="destaques">
-
-                <div class="destaque">
-                    <strong>🔧 Manutenção</strong>
-                    <span>
-                        Cuidado com seu veículo
-                    </span>
+<!-- CARROSSEL COM SLIDES DE EXEMPLO (AQUI APARECE NA PRÉ‑VISUALIZAÇÃO) -->
+<div id="fragment-f074b617-103c-6d2d-9efd-b401cd9ae042" class="component-slider">
+    <div class="carousel">
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <div style="width:100%;height:100%;background:linear-gradient(90deg,#1e88e5,#42a5f5);">
+                    <div class="carousel-caption">
+                        <h2>Slide 1</h2>
+                        <p>Texto do primeiro banner</p>
+                    </div>
                 </div>
-
-                <div class="destaque">
-                    <strong>🤝 Atendimento</strong>
-                    <span>
-                        Atenção ao cliente
-                    </span>
-                </div>
-
-                <div class="destaque">
-                    <strong>🚗 Automóveis</strong>
-                    <span>
-                        Serviços automotivos
-                    </span>
-                </div>
-
             </div>
-
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <div style="width:100%;height:100%;background:linear-gradient(90deg,#43a047,#66bb6a);">
+                    <div class="carousel-caption">
+                        <h2>Slide 2</h2>
+                        <p>Texto do segundo banner</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <div style="width:100%;height:100%;background:linear-gradient(90deg,#ef5350,#ff8a80);">
+                    <div class="carousel-caption">
+                        <h2>Slide 3</h2>
+                        <p>Texto do terceiro banner</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </section>
+        <!-- Botões de seta -->
+        <button class="carousel-control-prev carousel-control">‹</button>
+        <button class="carousel-control-next carousel-control">›</button>
 
-    <!-- CONTATO -->
-
-    <section class="contato" id="contato">
-
-        <h2 class="titulo">
-            Entre em <span>Contato</span>
-        </h2>
-
-        <p class="subtitulo">
-            Precisa de manutenção ou deseja consultar
-            um orçamento? Fale diretamente com a MD CAR.
-        </p>
-
-        <div class="contato-info">
-
-            <p>
-                <strong>📍 Localização:</strong>
-                Bairro Ouro Preto
-            </p>
-
-            <p>
-                <strong>🏙️ Cidade:</strong>
-                Carazinho - RS
-            </p>
-
-            <p>
-                <strong>📱 Telefone:</strong>
-                (54) 99914-5242
-            </p>
-
+        <!-- Indicadores (pontinhos) -->
+        <div class="carousel-footer">
+            <ol class="carousel-navigation">
+                <li><button class="carousel-item-button active"><span class="carousel-item-button-icon"></span></button></li>
+                <li><button class="carousel-item-button"><span class="carousel-item-button-icon"></span></button></li>
+                <li><button class="carousel-item-button"><span class="carousel-item-button-icon"></span></button></li>
+            </ol>
+            <button class="carousel-toggle-button">
+                <span class="carousel-toggle-icon-start">▶</span>
+                <span class="carousel-toggle-icon-stop d-none">⏸</span>
+                <span class="carousel-toggle-text">Stop slide rotation</span>
+            </button>
         </div>
+    </div>
+</div>
 
-        <a
-            class="botao"
-            href="https://wa.me/555499145242"
-            target="_blank"
-            rel="noopener noreferrer">
-            Chamar no WhatsApp
-        </a>
-
-        <a
-            class="botao botao-secundario"
-            href="https://www.google.com/maps/search/?api=1&query=Bairro+Ouro+Preto+Carazinho+RS"
-            target="_blank"
-            rel="noopener noreferrer">
-            Ver localização
-        </a>
-
-    </section>
-
-</main>
-
-<!-- RODAPÉ -->
-
-<footer>
-
-    <div class="logo">
-        MD <span>CAR</span>
+<!-- MENU DE ACESSO RÁPIDO COMPLETO -->
+<div class="menuAcessoRapido">
+  <div class="menuAcessoRapido__container row-fluid">
+    <div class="menuAcessoRapido__links">
+        <div class="menuAcessoRapido__links--pai">
+            <a class="menuAcessoRapido__links--link" href="https://www.unimed.coop.br/site/a-unimed1">A Unimed</a>
+        </div>
+        <div class="menuAcessoRapido__sublinks">
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/sistema-unimed-ar">Sistema Unimed</a></div>
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/unimed-do-brasil-ar">Unimed do Brasil</a></div>
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/cooperativismo-ar">Cooperativismo</a></div>
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://unimed-brasil.gupy.io/jobs/4250664?jobBoardSource=gupy_public_page" target="_blank">Trabalhe conosco</a></div>
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/politica-de-privacidade">Política de Privacidade</a></div>
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/termo-de-uso">Termo de uso</a></div>
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/rol-ans">Rol ANS</a></div>
+        </div>
     </div>
 
-    <p>
-        Oficina Mecânica | Carazinho - RS
-    </p>
+    <div class="menuAcessoRapido__links">
+        <div class="menuAcessoRapido__links--pai">
+            <a class="menuAcessoRapido__links--link" href="https://www.unimed.coop.br/site/servi%C3%A7os">Serviços</a>
+        </div>
+        <div class="menuAcessoRapido__sublinks">
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/2%C2%AA-via-de-boleto-ar">2ª via de Boleto</a></div>
+            <div class="menuAcessoRapido__sublinks--filho"><a href="https://www.unimed.coop.br/site/ir">Imposto de Renda</a></div>
+        </div>
+    </div>
+  </div>
+</div>
 
-    <p>
-        © <span id="ano"></span> MD CAR.
-        Todos os direitos reservados.
-    </p>
+<script type="module" >
+const configuration = {"autoHidePlayButton":true,"numberOfSlides":3};
+const fragmentElement = document.querySelector('#fragment-f074b617-103c-6d2d-9efd-b401cd9ae042');
+const fragmentEntryLinkNamespace = 'xwlo';
+const layoutMode = 'view';
+const INTERVAL = 5000;
+const MOVE_LEFT = 'move-left';
+const MOVE_RIGHT = 'move-right';
 
-</footer>
+const editMode = layoutMode === 'edit';
 
-<script>
-    document.getElementById("ano").textContent =
-        new Date().getFullYear();
-</script>
+const carouselInner = fragmentElement.querySelector('.carousel-inner');
+const indicators = [].slice.call(fragmentElement.querySelectorAll('.carousel-item-button'));
+const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
+const next = fragmentElement.querySelector('.carousel-control-next');
+const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
+const prev = fragmentElement.querySelector('.carousel-control-prev');
+const toggleButton = fragmentElement.querySelector('.carousel-toggle-button');
+const toggleButtonIconStart = fragmentElement.querySelector('.carousel-toggle-icon-start');
+const toggleButtonIconStop = fragmentElement.querySelector('.carousel-toggle-icon-stop');
+const toggleButtonText = fragmentElement.querySelector('.carousel-toggle-text');
+let intervalId = null;
+let moving = false;
 
-</body>
-  </html>
+function activateIndicator(activeItem, nextItem, movement) {
+    if (movement) {
+        activeItem.classList.add(movement);
+        nextItem.classList.add(movement);
+    }
+    const activeIndicator = getActiveIndicator();
+    const nextIndicator = indicators[getNextItemIndex()];
+    if(activeIndicator){
+        activeIndicator.classList.remove('active');
+        activeIndicator.setAttribute('aria-current', 'false');
+    }
+    if(nextIndicator){
+        nextIndicator.classList.add('active');
+        nextIndicator.setAttribute('aria-current', 'true');
+    }
+}
+function activateItem(activeItem, nextItem, movement) {
+    activeItem.classList.remove('active');
+    nextItem.classList.add('active');
+    if (movement) {
+        activeItem.classList.remove(movement);
+        nextItem.classList.remove(movement);
+    }
+}
+function getActiveIndicator() {
+    return fragmentElement.querySelector('.carousel-item-button.active');
+}
+function getNextItemIndex() {
+    return window[nextItemIndexKey] || 0;
+}
+function move(movement, index = null) {
+    if (moving) return;
+    moving = true;
+    const activeItem = fragmentElement.querySelector('.carousel-item.active');
+    const indexActiveItem = items.indexOf(activeItem);
+    setNextItemIndex(indexActiveItem < 1 ? items.length - 1 : indexActiveItem - 1);
+    if (index !== null) setNextItemIndex(index);
+    else if (movement === MOVE_RIGHT) setNextItemIndex(indexActiveItem >= items.length - 1 ? 0 : indexActiveItem + 1);
+    const nextItem = items[getNextItemIndex()];
+    activateIndicator(activeItem, nextItem, movement);
+    setTimeout(function () {
+        activateItem(activeItem, nextItem, movement);
+        moving = false;
+    }, 600);
+}
+function startCarousel() {
+    if (intervalId) clearInterval(intervalId);
+    intervalId = setInterval(function () {
+        if (document.contains(items[0])) move(MOVE_RIGHT);
+        else stopCarousel();
+    }, INTERVAL);
+    carouselInner.setAttribute('aria-live', 'off');
+    if(toggleButton){
+        toggleButton.classList.add('playing');
+        toggleButton.classList.remove('stopped');
+    }
+    if(toggleButtonIconStart) toggleButtonIconStart.classList.add('d-none');
+    if(toggleButtonIconStop) toggleButtonIconStop.classList.remove('d-none');
+    if(toggleButtonText) toggleButtonText.textContent = 'Stop slide rotation';
+}
+function stopCarousel() {
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+        carouselInner.setAttribute('aria-live', 'polite');
+        if(toggleButton){
+            toggleButton.classList.remove('playing');
+            toggleButton.classList.add('stopped');
+        }
+        if(toggleButtonIconStart) toggleButtonIconStart.classList.remove('d-none');
+        if(toggleButtonIconStop) toggleButtonIconStop.classList.add('d-none');
+        if(toggleButtonText) toggleButtonText.textContent = 'Start slide rotation';
+    }
+}
+function setNextItemIndex(index) {
+    window[nextItemIndexKey] = index;
+}
+
+(function () {
+    if (!editMode) startCarousel();
+    if (getNextItemIndex() < items.length) {
+        const activeItem = fragmentElement.querySelector('.carousel-item.active');
+        const nextItem = items[getNextItemIndex()];
+        activateIndicator(activeItem, nextItem);
+        activateItem(activeItem, nextItem);
+    }
+    if(prev) prev.addEventListener('click', function () { stopCarousel(); move(MOVE_LEFT); });
+    if(next) next.addEventListener('click', () => { stopCarousel(); move(MOVE_RIGHT); });
+    if(toggleButton) toggleButton.addEventListener('click', () => {
+        if (toggleButton.classList.contains('playing')) stopCarousel();
+        else startCarousel();
+    });
+    indicators.forEach(function (indicator, index) {
+        indicator.addEventListener('click', function () {
+            const indexActiveIndicator =
